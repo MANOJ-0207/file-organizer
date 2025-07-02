@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <title>File Organizer</title>
+    <link rel="stylesheet" href="styles/base.css" />
+  </head>
+
+  <body>
+    <header class="app-header">
+      <div class="app-title">File Organizer</div>
+
+      <label class="toggle-switch">
+        <input type="checkbox" id="themeToggle" onchange="toggleTheme()" />
+        <span class="slider"></span><span>Theme</span>
+      </label>
+    </header>
+
+    <div class="form-section">
+      <button class="template-button" onclick="viewTemplates()">
+        Use Template
+      </button>
+      <!-- Template Modal -->
+      <div id="template-modal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close" onclick="closeTemplateModal()">&times;</span>
+          <h2>Saved Templates</h2>
+          <div id="template-list" class="template-list">
+            <!-- Template buttons or messages will be inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Folder Input -->
+      <label for="homeDir">Select Home Folder:</label>
+      <input
+        type="text"
+        id="homeDir"
+        placeholder="Click to choose folder..."
+        readonly
+        onclick="chooseFolder()"
+      />
+
+      <!-- Advanced Name Filter -->
+      <div class="toggle-row">
+        <label for="enableAdvanced">Advanced Name Filter</label>
+        <label class="toggle-switch">
+          <input
+            type="checkbox"
+            id="enableAdvanced"
+            onchange="toggleAdvanced()"
+          />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- Wildcard Pattern Input -->
+      <div id="advanced-filter-section" style="display: none">
+        <label for="namePattern">
+          Name Match Filter
+          <span class="info-wrapper">
+            <span class="info-icon">ⓘ</span>
+            <div class="tooltip-box">
+              <strong>Match Pattern Guide</strong><br />
+              <ul style="margin: 0.5rem 0 0 1.2rem; padding: 0">
+                <li><code>_</code> ⇒ Single character</li>
+                <li><code>%</code> ⇒ Any number of characters</li>
+              </ul>
+              <div style="margin-top: 0.5rem">
+                <code>_ _Event%</code> matches <em>abEvent123.jpg</em>
+              </div>
+            </div>
+          </span>
+        </label>
+        <input type="text" id="namePattern" placeholder="e.g., __Keyword %" />
+      </div>
+
+      <!-- Toggle Time Filter -->
+      <div class="toggle-row">
+        <label for="enableTimeFilter">Use Time Filter</label>
+        <label class="toggle-switch">
+          <input
+            type="checkbox"
+            id="enableTimeFilter"
+            onchange="toggleTimeFilter()"
+          />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- Time Filter Section -->
+      <div id="time-filter-section" style="display: none">
+        <div class="flex-row">
+          <div class="half">
+            <label for="startTime">Start Time:</label>
+            <input type="datetime-local" id="startTime" />
+          </div>
+          <div class="half">
+            <label for="endTime">End Time:</label>
+            <input type="datetime-local" id="endTime" />
+          </div>
+        </div>
+
+        <div class="toggle-row">
+          <label for="tillNow">Set now as End Time</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="tillNow" onchange="toggleTillNow()" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <label for="filterTimeType">Filter Files By:</label>
+        <select id="filterTimeType">
+          <option value="created">Created Time</option>
+          <option value="modified">Modified Time</option>
+        </select>
+      </div>
+
+      <!-- File Types Accordion -->
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          File Type Filter <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div id="file-type-checkboxes">
+            <em
+              >No folder selected - All file types inside the folder will be
+              shown once folder is selected</em
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Rename Mode -->
+      <!-- <label>Rename Mode:</label> -->
+      <!-- <div class="radio-group">
+        <label class="radio-label"
+          ><input
+            type="radio"
+            name="renameMode"
+            value="rename"
+            checked
+            onchange="handleRenameMode()"
+          />
+          Complete Rename</label
+        >
+        <label class="radio-label"
+          ><input
+            type="radio"
+            name="renameMode"
+            value="replace"
+            onchange="handleRenameMode()"
+          />
+          Rename Parts</label
+        >
+      </div> -->
+
+      <div id="rename-type-section">
+        <label for="renameMode">Rename Mode:</label>
+        <select id="renameMode" onchange="handleRenameMode()">
+          <option value="rename">Rename</option>
+          <option value="replace">Replace</option>
+          <option value="none" selected>None</option>
+        </select>
+      </div>
+
+      <!-- Rename Pattern -->
+      <div id="rename-format-section" class="rename-pattern-row">
+        <label>Rename Pattern:</label>
+        <div class="rename-composite">
+          <input class="full-width-important" type="text" id="prefixInput" placeholder="Prefix" />
+          <span class="id-placeholder">${id}</span>
+          <input class="full-width-important" type="text" id="suffixInput" placeholder="Suffix" />
+        </div>
+
+        <div class="date-token-options">
+          <div class="format-row">
+            <label
+              ><input type="checkbox" id="includeDatePrefix" /> Include
+              Date-Time in Prefix</label
+            >
+            <input
+              type="text"
+              id="prefixFormatInput"
+              placeholder="Prefix Format (e.g. dd-MM-yyyy)"
+              style="display: none"
+            />
+          </div>
+
+          <div class="format-row">
+            <label
+              ><input type="checkbox" id="includeDateSuffix" /> Include
+              Date-Time in Suffix</label
+            >
+            <input
+              type="text"
+              id="suffixFormatInput"
+              placeholder="Suffix Format (e.g. HH:mm:ss)"
+              style="display: none"
+            />
+          </div>
+
+          <div id="time-type" style="display: none">
+            <label for="timeType">Time Type:</label>
+            <select id="timeType">
+              <option value="created">Created Time</option>
+              <option value="modified">Modified Time</option>
+            </select>
+          </div>
+
+          <div
+            class="accordion"
+            id="date-format-instructions"
+            style="display: none"
+          >
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span class="info-label"
+                >Date-Time Format Instructions
+                <span class="info-icon">ⓘ</span></span
+              >
+              <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+              <ul>
+                <li><code>hh</code> – Hour (2-digit, 24-hour)</li>
+                <li><code>mm</code> – Minute</li>
+                <li><code>ss</code> – Second</li>
+                <li><code>yy</code> – Year (2-digit)</li>
+                <li><code>yyyy</code> – Year (4-digit)</li>
+                <li><code>dd</code> – Day</li>
+                <li><code>MM</code> – Month</li>
+                <li><code>mon</code> – Short Month</li>
+                <li><code>month</code> – Full Month</li>
+                <li><code>day</code> – Short Day</li>
+                <li><code>DAY</code> – Full Day</li>
+                <li>
+                  <code
+                    >Include these formats as needed in prefix/suffix date
+                    format separated by special characters. (Not Alphabets and
+                    Numbers)</code
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Start ID -->
+        <label for="startId">Starting ID:</label>
+        <input type="number" id="startId" value="0" min="0" />
+
+         <!-- Toggle Sort -->
+      <div class="toggle-row">
+        <label for="enableSort">Enable Sorting</label>
+        <label class="toggle-switch">
+          <input
+            type="checkbox"
+            id="enableSort"
+            onchange="toggleSortSection(event)"
+          />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- Sort Options -->
+      <div id="sort-order-section" style="display: none">
+        <label for="sortType">Sort Files By:</label>
+        <select id="sortType">
+          <option value="created">Created Time</option>
+          <option value="modified">Modified Time</option>
+          <option value="name">File Name</option>
+          <option value="size">File Size</option>
+        </select>
+      </div>
+
+      <div id="sort-options-section" style="display: none">
+        <label for="sortOrder">Sort Order :</label>
+        <select id="sortOrder">
+          <option value="asc">Ascending</option>
+          <option value="dsc">Descending</option>
+        </select>
+      </div>
+      
+      </div>
+
+      <!-- Replace Fields -->
+      <div id="replace-fields-section" style="display: none">
+        <label for="sourceWord">Find Word:</label>
+        <input type="text" id="sourceWord" placeholder="e.g., IMG" />
+        <label for="targetWord">Replace With:</label>
+        <input type="text" id="targetWord" placeholder="e.g., PIC" />
+      </div>
+
+      <!-- Move to Subfolder -->
+      <div class="toggle-row">
+        <label for="moveToSub">Move to Subfolder</label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="moveToSub" onchange="toggleSubfolder()" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div id="move-folder-section" style="display: none">
+        <label for="subfolderName">Subfolder Name:</label>
+        <input
+          type="text"
+          id="subfolderName"
+          placeholder="e.g., Organized Files"
+        />
+      </div>
+
+      <!-- Submit -->
+      <button onclick="submitFilters()">Preview Changes</button>
+    </div>
+
+    <div id="save-template-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close" onclick="closeSaveTemplateModal()">&times;</span>
+        <h2>Save as Template</h2>
+        <input
+          type="text"
+          id="templateNameInput"
+          placeholder="Enter template name"
+          style="width: 100%; padding: 8px"
+        />
+        <div
+          style="
+            margin-top: 15px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+          "
+        >
+          <button onclick="confirmSaveTemplate()">Save</button>
+          <button onclick="closeSaveTemplateModal()">Cancel</button>
+        </div>
+        <p
+          id="template-warning"
+          style="color: red; display: none; margin-top: 10px"
+        ></p>
+      </div>
+    </div>
+    <script src="scripts/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+
+/* ============================================================================
+   ACCORDIONS
+   ============================================================================ */
+
+.accordion {
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  background-color: var(--input-bg);
+  max-width: 500px;
+}
+
+.accordion-header {
+  background-color: var(--card-bg);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover {
+  background-color: var(--input-border);
+}
+
+.accordion-content {
+  padding: 0.5rem 1rem;
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  font-size: 14px;
+}
+
+.accordion.open .accordion-content {
+  display: flex;
+}
+
+.accordion .arrow {
+  font-size: 0.85rem;
+  transition: transform 0.3s ease;
+}
+
+.accordion.open .arrow {
+  transform: rotate(180deg);
+}
+
+.accordion-content label {
+  padding: 0.5rem 0.25rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--input-border);
+  margin: 0;
+  transition: background-color 0.2s ease;
+}
+
+.accordion-content label:last-child {
+  border-bottom: none;
+}
+
+.accordion-content label:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}

@@ -1,0 +1,61 @@
+
+/* ============================================================================
+   FORM ELEMENTS
+   ============================================================================ */
+
+label {
+  display: block;
+  margin: 1rem 0 0;
+  font-weight: 500;
+}
+
+.format-row label, 
+.radio-label {
+  margin: 0;
+}
+
+input,
+select {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 15px;
+  margin: 1rem 0;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+input[type='text'],
+input[type='number'],
+input[type='datetime-local'],
+select {
+  width: -webkit-fill-available;
+}
+
+input[type='datetime-local'] {
+  max-width: 300px;
+}
+
+select {
+  appearance: none;
+}
+
+#suffixFormatInput {
+  margin-top: 0;
+}
+
+#timeType {
+  margin-bottom: 0;
+}
+
+.full-width-important {
+    width: 100% !important; 
+}

@@ -1,0 +1,65 @@
+{
+  "name": "file-organizer",
+  "version": "1.0.0",
+  "description": "Organize files using Electron + Spring",
+  "author": "Manoj Kumar G",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^36.5.0",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "tree-kill": "^1.2.2",
+    "electron-is-dev": "^2.0.0"
+  },
+  "build": {
+    "appId": "com.manoj.fileorganizer",
+    "productName": "File Organizer",
+    "artifactName": "${productName} Setup ${version}.${ext}",
+    "files": [
+      "**/*",
+      "!Backend/fileOrganizer-backend.jar"
+    ],
+    "extraResources": [
+      {
+        "from": "Backend/fileOrganizer-backend.jar",
+        "to": "fileOrganizer-backend.jar"
+      },
+      {
+        "from": "jre",
+        "to": "jre"
+      }
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "icon": "assets/FileOrganizerLogo.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "File Organizer",
+      "installerIcon": "assets/FileOrganizerLogo.ico",
+      "uninstallerIcon": "assets/FileOrganizerLogo.ico",
+      "installerHeaderIcon": "assets/FileOrganizerLogo.ico",
+      "perMachine": false,
+      "menuCategory": true
+    }
+  }
+}

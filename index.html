@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Organizer - Download & Docs</title>
+    <link rel="stylesheet" href="styles/official.css" />
+    <link rel="icon" type="image/x-icon" href="assets/FileOrganizer Icon.png" />
+  </head>
+  <body>
+    <header>
+      <h1>📁 File Organizer</h1>
+      <div class="toggle-theme">
+        <label for="themeToggle">Theme</label>
+        <input type="checkbox" id="themeToggle" />
+      </div>
+      <p>A smart way to organize your files with ease.</p>
+      <a class="btn-download" href="File Organizer Setup 1.0.0.exe" download>
+        ⬇️ Download for Windows (.exe)
+      </a>
+    </header>
+
+    <div class="container">
+      <div class="tabs">
+        <div class="tab active" onclick="showTab('user')">📁 User Guide</div>
+        <div class="tab" onclick="showTab('dev')">💻 Developer Setup</div>
+      </div>
+
+      <div id="user" class="tab-content active">
+        <section>
+          <h2>🚀 Features</h2>
+          <ul>
+            <li>Select folder to organize</li>
+            <li>Advanced renaming using date/time patterns</li>
+            <li>
+              Filter files by type, name pattern (SQL-like), and date modified
+            </li>
+            <li>Undo operations with a click</li>
+            <li>Supports reusable templates</li>
+            <li>Light/Dark theme switcher</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>📋 Notes Before You Start</h2>
+          <ul class="warning">
+            <li>
+              No Node.js or Java installation needed – Amazon Corretto JRE is
+              embedded.
+            </li>
+            <li>
+              After clicking "Commit", changes are permanent and can't be
+              reverted.
+            </li>
+            <li>Use "Preview" before confirming rename/move operations.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>🧾 Field Instructions</h2>
+          <ul>
+            <li>
+              <strong>Folder Path:</strong> Select the folder you want to
+              organize.
+            </li>
+            <li>
+              <strong>File Types:</strong> Filter by extensions (.jpg, .pdf,
+              etc).
+            </li>
+            <li>
+              <strong>Name Pattern:</strong> SQL-like wildcard, e.g.
+              <code>_data%.csv</code>
+            </li>
+            <li>
+              <strong>Date Range:</strong> Filter files by last modified date.
+            </li>
+            <li>
+              <strong>Rename Pattern:</strong> Use tokens like {date},
+              {time}<code>Example: IMG_{date}_{id}</code>
+            </li>
+            <li>
+              <strong>Replace Pattern:</strong> Example: IMG → Event<br /><code
+                >Example: IMG_123 → Event_123</code
+              >
+            </li>
+            <li>
+              <strong>Subfolder:</strong> If enabled, files will be moved to a
+              subfolder.
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <div id="dev" class="tab-content">
+        <section>
+          <h2>🧱 Architecture Overview</h2>
+          <pre><code>+----------------------+      HTTP      +------------------------+
+| Electron Frontend    |  <--------->   | Spring Boot Backend    |
+| HTML/CSS/JS          |                | Java + REST APIs       |
++----------------------+                +------------------------+</code></pre>
+          <ul>
+            <li>Frontend: Electron (Node.js + Chromium)</li>
+            <li>Backend: Spring Boot with REST APIs</li>
+            <li>JAR runs with embedded Amazon Corretto JRE</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>📦 Project Structure</h2>
+          <pre><code>📦 file-organizer/
+├── Backend/
+├── assets/
+├── scripts/
+├── styles/
+├── index.html
+├── main.js
+├── preload.js
+└── package.json</code></pre>
+        </section>
+
+        <section>
+          <h2>🛠 Build Instructions</h2>
+          <pre><code>git clone https://github.com/MANOJ-0207/file-organizer.git
+cd file-organizer
+
+# Build Spring Boot
+cd Backend
+mvn clean install
+mv target/fileOrganizer-backend.jar ../Backend/
+
+# Electron
+cd ..
+npm install
+npm start</code></pre>
+        </section>
+
+        <section>
+          <h2>📦 Packaging</h2>
+          <pre><code>npm run dist</code></pre>
+        </section>
+
+        <section>
+          <h2>🧠 Internals</h2>
+          <ul>
+            <li>
+              <strong>Strategy Pattern:</strong> RenameStrategy and SortStrategy
+              are interchangeable.
+            </li>
+            <li>
+              <strong>Decorator Pattern:</strong> Filter chains wrap around base
+              logic.
+            </li>
+            <li>
+              <strong>SQL-like Pattern:</strong> Used for name-based file
+              filtering.
+            </li>
+            <li>Renaming and sorting logic is separated for reusability.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>
+            <a
+              href="https://github.com/MANOJ-0207/file-organizer"
+              style="text-decoration: none"
+              >🔗</a
+            >
+            GitHub Repository
+          </h2>
+          <p>
+            Source code available on
+            <a
+              href="https://github.com/MANOJ-0207/file-organizer"
+              target="_blank"
+            >
+              GitHub
+            </a>
+          </p>
+        </section>
+
+        <section>
+          <h2>📬 Reach the Developer</h2>
+          <p>
+            Have feedback or suggestions? Visit my portfolio to learn more or
+            get in touch - 
+            <a href="https://manoj-0207.github.io/Portfolio/" style="text-decoration: none" target="_blank">
+             Manoj Kumar G
+            </a>
+          </p>
+        </section>
+      </div>
+    </div>
+
+    <footer>© 2025 File Organizer | Manoj Kumar G</footer>
+
+    <script src="scripts/official.js"></script>
+  </body>
+</html>

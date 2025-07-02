@@ -1,0 +1,96 @@
+/* ============================================================================
+   RENAME PATTERN COMPONENTS
+   ============================================================================ */
+
+.rename-composite {
+  display: flex;
+  align-items: center;
+}
+
+.rename-composite input {
+  flex: 1;
+}
+
+.id-placeholder {
+  padding: 0.5rem 0.7rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  color: var(--primary-color);
+  font-weight: bold;
+  margin: 1rem 0.5rem;
+}
+
+.date-token-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 14px;
+}
+
+.date-token-options .format-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.date-token-options .format-row input[type="text"] {
+  width: 200px;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+/* ============================================================================
+   TOOLTIPS & INFO ELEMENTS
+   ============================================================================ */
+
+.info-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-box {
+  position: absolute;
+  top: 1.8rem;
+  left: 1.2rem;
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--input-border);
+  font-size: 14px;
+  line-height: 1.4;
+  z-index: 1000;
+  display: none;
+  width: 300px;
+}
+
+.tooltip-box::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: -8px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent var(--input-border) transparent transparent;
+}
+
+.info-wrapper:hover .tooltip-box {
+  display: block;
+}
+
+
+/* ============================================================================
+   HIDDEN SECTIONS & UTILITY CLASSES
+   ============================================================================ */
+
+#move-folder-section,
+#advanced-filter-section {
+  display: none;
+  max-width: 500px;
+}
+
+.hidden {
+  display: none;
+}

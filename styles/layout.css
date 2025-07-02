@@ -1,0 +1,51 @@
+/* ============================================================================
+   LAYOUT COMPONENTS
+   ============================================================================ */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 1rem 2rem 2rem 2rem;
+    border-bottom: 1px solid var(--input-border);
+    border-radius: 8px 8px 0 0;
+    max-width: 700px;
+    margin: auto;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.app-title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    color: var(--text-color);
+}
+
+.form-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin: auto;
+    max-width: 700px;
+}
+
+.flex-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.half {
+    flex: 1;
+    min-width: 240px;
+}
+
+.toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 500px;
+}
