@@ -8,12 +8,13 @@
     <link rel="icon" type="image/x-icon" href="assets/FileOrganizer Icon.png" />
   </head>
   <body>
+    <div class="theme-icon-toggle" id="themeToggle">
+      <img src="assets/moon.png" id="icon-moon" alt="Dark Theme" />
+      <img src="assets/sun.png" id="icon-sun" alt="Light Theme" />
+    </div>
+
     <header>
       <h1>📁 File Organizer</h1>
-      <div class="toggle-theme">
-        <label for="themeToggle">Theme</label>
-        <input type="checkbox" id="themeToggle" />
-      </div>
       <p>A smart way to organize your files with ease.</p>
       <a
         class="btn-download"
@@ -32,7 +33,12 @@
 
       <div id="user" class="tab-content active">
         <section>
-          <h2>🚀 Features</h2>
+          <h2>
+            🚀 Features
+            <a href="preview.html" class="preview-btn" target="_blank"
+              >Preview UI</a
+            >
+          </h2>
           <ul>
             <li>Select folder to organize</li>
             <li>Advanced renaming using date/time patterns</li>
@@ -56,7 +62,7 @@
               After clicking "Commit", changes are permanent and can't be
               reverted.
             </li>
-            <li>Use "Preview" before confirming rename/move operations.</li>
+            <li>Check the target directory once before confirming rename/move operations.</li>
           </ul>
         </section>
 
@@ -166,7 +172,8 @@ npm start</code></pre>
           <h2>
             <a
               href="https://github.com/MANOJ-0207/file-organizer"
-              style="text-decoration: none"
+              class="link-git"
+              target="_blank"
               >🔗</a
             >
             GitHub Repository
@@ -175,10 +182,10 @@ npm start</code></pre>
             Source code available on
             <a
               href="https://github.com/MANOJ-0207/file-organizer"
+              class="link-github"
               target="_blank"
+              >GitHub</a
             >
-              GitHub
-            </a>
           </p>
         </section>
 
@@ -189,11 +196,10 @@ npm start</code></pre>
             get in touch -
             <a
               href="https://manoj-0207.github.io/Portfolio/"
-              style="text-decoration: none"
+              class="link-portfolio"
               target="_blank"
+              >Manoj Kumar G</a
             >
-              Manoj Kumar G
-            </a>
           </p>
         </section>
       </div>

@@ -11,38 +11,33 @@ function showTab(id) {
   localStorage.setItem("activeTab", id);
 }
 
-function applySavedTheme() {
-  const root = document.documentElement;
-  const checkbox = document.getElementById("themeToggle");
-  const storedTheme = localStorage.getItem("theme");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  const theme = storedTheme || (prefersDark ? "dark" : "light");
-  root.setAttribute("data-theme", theme);
-
-  if (checkbox) checkbox.checked = theme === "dark";
-}
-
-function toggleTheme() {
-  const root = document.documentElement;
-  const checkbox = document.getElementById("themeToggle");
-  const isDark = checkbox.checked;
-
-  const nextTheme = isDark ? "dark" : "light";
-  root.setAttribute("data-theme", nextTheme);
-  localStorage.setItem("theme", nextTheme);
-}
-
 function applySavedTab() {
   const savedTab = localStorage.getItem("activeTab") || "user";
   showTab(savedTab);
 }
 
+function applySavedTheme() {
+  const savedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const theme = savedTheme || (prefersDark ? "dark" : "light");
+  document.documentElement.setAttribute("data-theme", theme);
+}
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const currentTheme = root.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  root.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   applySavedTheme();
-
-  const checkbox = document.getElementById("themeToggle");
-  if (checkbox) checkbox.addEventListener("change", toggleTheme);
-
   applySavedTab();
+
+  // Theme icon click listener
+  const themeToggle = document.getElementById("themeToggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", toggleTheme);
+  }
 });
