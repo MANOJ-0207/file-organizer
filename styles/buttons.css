@@ -1,18 +1,19 @@
 /* ============================================================================
    BUTTONS
-   ============================================================================ */
+   ============================================================================
+*/
 
 button {
   background-color: var(--primary-color);
-  color: white;
-  padding: 0.7rem 1.3rem;
   border: none;
   border-radius: 8px;
+  color: white;
   cursor: pointer;
-  font-weight: 500;
   font-size: 15px;
-  transition: background-color 0.2s ease;
+  font-weight: 500;
   margin-top: 1rem;
+  padding: 0.7rem 1.3rem;
+  transition: background-color 0.2s ease;
 }
 
 button:hover {
@@ -20,15 +21,15 @@ button:hover {
 }
 
 .template-button {
-  padding: 8px 16px;
   background-color: var(--primary-color);
-  color: white;
   border: none;
   border-radius: 4px;
+  color: white;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.3s ease;
   margin-top: 1rem;
+  padding: 8px 16px;
+  transition: background-color 0.3s ease;
 }
 
 .template-button:hover {
@@ -37,14 +38,14 @@ button:hover {
 
 .theme-button {
   background: transparent;
-  color: var(--primary-color);
   border: 1px solid var(--primary-color);
-  padding: 0.35rem 0.8rem;
-  font-size: 14px;
   border-radius: 6px;
+  color: var(--primary-color);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  font-size: 14px;
   margin: 0;
+  padding: 0.35rem 0.8rem;
+  transition: background-color 0.2s ease;
 }
 
 .theme-button:hover {
@@ -53,48 +54,98 @@ button:hover {
 }
 
 /* ============================================================================
-   TOGGLE SWITCHES
-   ============================================================================ */
+   FILE TYPE CHECKBOXES
+   ============================================================================
+*/
 
-.toggle-switch {
-  position: relative;
+.fileTypeCheckBox,
+#ft_all {
   display: inline-block;
-  width: 50px;
-  height: 24px;
+  margin: 0;
 }
 
-.app-header .toggle-switch {
-  margin-top: 0;
+/* ============================================================================
+   HEADER & THEME TOGGLE
+   ============================================================================
+*/
+
+.app-header {
+  align-items: center;
+  background-color: var(--card); /* Optional header background */
+  display: flex;
+  justify-content: space-between; /* Title left, toggle right */
+  padding: 0.5rem 1rem;
+  position: relative;
+  z-index: 1000;
+}
+
+.theme-icon-toggle {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+
+.theme-icon-toggle img {
+  background: var(--card);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+  transition: opacity 0.3s ease;
+  width: 100%;
+}
+
+/* Show/Hide theme icons */
+#icon-sun { display: none; }
+[data-theme='light'] #icon-sun { display: block; }
+[data-theme='dark'] #icon-sun { display: none; }
+[data-theme='light'] #icon-moon { display: none; }
+[data-theme='dark'] #icon-moon { display: block; }
+
+/* ============================================================================
+   TOGGLE SWITCHES
+   ============================================================================
+*/
+
+.toggle-switch {
+  display: inline-block;
+  height: 24px;
+  position: relative;
+  width: 50px;
 }
 
 .toggle-switch input {
+  height: 0;
   opacity: 0;
   width: 0;
-  height: 0;
 }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: #ccc;
-  transition: 0.4s;
   border-radius: 34px;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
 }
 
 .slider:before {
-  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  bottom: 3px;
   content: "";
   height: 18px;
-  width: 18px;
   left: 3px;
-  bottom: 3px;
-  background-color: white;
+  position: absolute;
   transition: 0.4s;
-  border-radius: 50%;
+  width: 18px;
 }
 
 input:checked + .slider {
@@ -103,9 +154,4 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(26px);
-}
-
-.fileTypeCheckBox , #ft_all{
-  margin: 0;
-  display: inline-block;
 }

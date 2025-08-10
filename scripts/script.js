@@ -35,26 +35,27 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 function applySavedTheme() {
-  const root = document.documentElement;
-  const checkbox = document.getElementById("themeToggle");
-  const storedTheme = localStorage.getItem("theme");
+  const savedTheme = localStorage.getItem("theme");
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  const theme = storedTheme || (prefersDark ? "dark" : "light");
-  root.setAttribute("data-theme", theme);
-
-  if (checkbox) checkbox.checked = theme === "dark";
+  const theme = savedTheme || (prefersDark ? "dark" : "light");
+  document.documentElement.setAttribute("data-theme", theme);
 }
 
 function toggleTheme() {
   const root = document.documentElement;
-  const checkbox = document.getElementById("themeToggle");
-  const isDark = checkbox.checked;
-
-  const nextTheme = isDark ? "dark" : "light";
-  root.setAttribute("data-theme", nextTheme);
-  localStorage.setItem("theme", nextTheme);
+  const currentTheme = root.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  root.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
 }
+
+applySavedTheme();
+
+  // Theme icon click listener
+  const themeToggle = document.getElementById("themeToggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", toggleTheme);
+  }
 
 // ============================================================================
 // FOLDER & FILE HANDLING
