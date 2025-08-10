@@ -4,11 +4,30 @@ const fs = require("fs");
 const { spawn } = require("child_process");
 const treeKill = require("tree-kill");
 
-let win;
-let springProcess;
-
-// Detect dev mode (optional, if you want to support both dev and prod)
 const isDev = require("electron-is-dev");
+
+const APP_ID = "io.github.manoj-0207.file-organizer";
+
+if (process.platform === "win32") {
+  app.setAppUserModelId(APP_ID);
+  app.name = "File Organizer";
+}
+
+// Prevent multiple instances (helps with taskbar/shortcut behavior)
+const gotLock = app.requestSingleInstanceLock();
+if (!gotLock) {
+  app.quit();
+} else {
+  app.on("second-instance", () => {
+    if (win) {
+      if (win.isMinimized()) win.restore();
+      win.focus();
+    }
+  });
+}
+
+let win = null;
+let springProcess = null;
 
 function startSpringBootBackend() {
   const jarPath = isDev
@@ -19,6 +38,7 @@ function startSpringBootBackend() {
     ? path.join(__dirname, "jre", "bin", "java")
     : path.join(process.resourcesPath, "jre", "bin", "java");
 
+  // spawn the bundled java runtime (or system java in dev if you prefer)
   springProcess = spawn(javaPath, ["-jar", jarPath, "--server.port=1527"]);
 
   springProcess.stdout.on("data", (data) => {
@@ -29,7 +49,8 @@ function startSpringBootBackend() {
       output.includes("Started") ||
       output.toLowerCase().includes("started application")
     ) {
-      createWindow(); // Start the window only after backend is ready
+      // Create window only after backend is ready
+      if (!win) createWindow();
     }
   });
 
@@ -43,13 +64,17 @@ function startSpringBootBackend() {
 }
 
 function createWindow() {
+  const iconPath = isDev
+    ? path.join(__dirname, "assets", "FileOrganizerLogo.ico")
+    : path.join(process.resourcesPath, "assets", "FileOrganizerLogo.ico");
+
   win = new BrowserWindow({
     width: 800,
     height: 600,
     backgroundColor: "#ffffff",
     show: false,
     autoHideMenuBar: true,
-    icon: path.join(__dirname, "assets", "FileOrganizerLogo.ico"),
+    icon: iconPath,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -67,14 +92,21 @@ function createWindow() {
   });
 }
 
+// Run backend after app is ready
 app.whenReady().then(startSpringBootBackend);
 
+// Proper shutdown
 app.on("window-all-closed", () => {
-  treeKill(springProcess.pid, "SIGTERM", () => {
-    setTimeout(() => {
-      if (process.platform !== "darwin") app.quit();
-    }, 500);
-  });
+  // only quit after spring process is terminated
+  if (springProcess && springProcess.pid) {
+    treeKill(springProcess.pid, "SIGTERM", () => {
+      setTimeout(() => {
+        if (process.platform !== "darwin") app.quit();
+      }, 500);
+    });
+  } else {
+    if (process.platform !== "darwin") app.quit();
+  }
 });
 
 app.on("activate", () => {

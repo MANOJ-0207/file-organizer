@@ -1,6 +1,6 @@
 {
   "name": "file-organizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Organize files using Electron + Spring",
   "author": "Manoj Kumar G",
   "main": "main.js",
@@ -17,9 +17,10 @@
     "electron-is-dev": "^2.0.0"
   },
   "build": {
-    "appId": "com.manoj.fileorganizer",
+    "appId": "io.github.manoj-0207.file-organizer",
     "productName": "File Organizer",
     "artifactName": "${productName} Setup ${version}.${ext}",
+    "icon": "assets/FileOrganizerLogo.ico",
     "files": [
       "**/*",
       "!Backend/fileOrganizer-backend.jar"
@@ -47,7 +48,7 @@
           ]
         }
       ],
-      "signAndEditExecutable": false
+      "signAndEditExecutable": true
     },
     "nsis": {
       "oneClick": false,
@@ -58,7 +59,7 @@
       "installerIcon": "assets/FileOrganizerLogo.ico",
       "uninstallerIcon": "assets/FileOrganizerLogo.ico",
       "installerHeaderIcon": "assets/FileOrganizerLogo.ico",
-      "perMachine": false,
+      "uninstallDisplayName": "File Organizer",
       "menuCategory": true
     }
   }
